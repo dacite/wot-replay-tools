@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "replay_tools"
+]
+
+[profile.release]
+lto = true
