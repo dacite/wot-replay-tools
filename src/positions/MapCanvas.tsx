@@ -43,7 +43,7 @@ export default function MapCanvas() {
                 height={map.height}
                 width={map.width}
                 className="absolute"
-                src={`src/assets/maps/${map.id}.png`}
+                src={`maps/${map.id}.png`}
                 alt=""
             />
             <canvas
