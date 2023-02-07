@@ -14,7 +14,7 @@ impl BoundingBox {
     pub fn width(&self) -> u32 {
         (self.min_x as i32).abs_diff(self.max_x as i32)
     }
-    
+
     pub fn height(&self) -> u32 {
         (self.min_y as i32).abs_diff(self.max_y as i32)
     }

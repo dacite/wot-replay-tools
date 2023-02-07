@@ -45,7 +45,7 @@ pub fn parse_replay(replay: &[u8]) -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
     let parser = ReplayParser::parse(replay.to_vec()).unwrap();
     set_parser(Some(parser));
-    
+
     Ok(())
 }
 
@@ -58,7 +58,7 @@ pub fn clear() {
 pub struct MapInfo {
     id: String,
     height: u32,
-    width: u32
+    width: u32,
 }
 
 #[wasm_bindgen]
@@ -66,12 +66,14 @@ pub fn get_map() -> Result<String, String> {
     let parser = get_parser().unwrap();
 
     let map_id = utils::map_id(parser).ok_or_else(|| "Cannot find map".to_owned())?;
-    let bounding_box = maps::MAPS.get(map_id.as_str()).ok_or_else(|| "Cannot find map bounding box".to_owned())?;
+    let bounding_box = maps::MAPS
+        .get(map_id.as_str())
+        .ok_or_else(|| "Cannot find map bounding box".to_owned())?;
 
-    let map_info = MapInfo{
+    let map_info = MapInfo {
         id: map_id,
         height: bounding_box.height(),
-        width: bounding_box.width()
+        width: bounding_box.width(),
     };
 
     Ok(serde_json::to_string(&map_info).unwrap())
@@ -81,14 +83,16 @@ pub fn get_map() -> Result<String, String> {
 pub struct MapPosition {
     avatar_id: i32,
     x: f32,
-    y: f32
+    y: f32,
 }
 
 #[wasm_bindgen]
 pub fn positions() -> Result<String, String> {
     let parser = get_parser().unwrap();
     let map_id = utils::map_id(parser).ok_or_else(|| "Cannot find map".to_owned())?;
-    let bounding_box = maps::MAPS.get(map_id.as_str()).ok_or_else(|| "Cannot find map bounding box".to_owned())?;
+    let bounding_box = maps::MAPS
+        .get(map_id.as_str())
+        .ok_or_else(|| "Cannot find map bounding box".to_owned())?;
 
     let positions: Vec<_> = parser
         .event_stream()
@@ -99,7 +103,8 @@ pub fn positions() -> Result<String, String> {
                 let (x, y) = maps::to_2d_coordinates(&bounding_box, p.position.x, p.position.y);
                 Some(MapPosition {
                     avatar_id: p.entity_id,
-                    x, y
+                    x,
+                    y,
                 })
             } else {
                 None
