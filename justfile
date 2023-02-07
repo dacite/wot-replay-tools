@@ -7,4 +7,5 @@ wasm-release:
     wasm-bindgen --target bundler --out-dir ./src/wasm target/wasm32-unknown-unknown/release/replay_tools.wasm
 
 fmt:
+    npx rome format . --write
     cargo +nightly fmt
